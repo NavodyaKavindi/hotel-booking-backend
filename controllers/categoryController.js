@@ -1,5 +1,6 @@
 
 import Category from '../models/category.js';
+import { isAdminValid } from './userController.js';
 export function createCategory(req,res){
 
     if(req.user == null){
@@ -148,14 +149,3 @@ message: "Unauthorized"
     
 }
 
-function isAdminValid(req){
-    if(req.user == null){
-       return false
-        }
-        
-    if (req.user.type !="admin"){
-       
-        return false
-    }
-    return true;  
-}
