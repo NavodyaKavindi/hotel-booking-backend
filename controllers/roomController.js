@@ -1,6 +1,6 @@
 import Room from '../models/room.js';
-import room from  '../models/room.js';
 import { isAdminValid } from './userController.js';
+
 export function createRoom  (req,res){
 
     if (!isAdminValid(req)){
@@ -10,7 +10,7 @@ export function createRoom  (req,res){
         return
     }
 
-    const newRoom = newRoom (req.body)
+    const newRoom = new Room(req.body)
     newRoom.save().then(
 
         (result)=>{
@@ -145,4 +145,25 @@ message: "Forbidden"
   )
         
     
+}
+
+export function getRoomsByCategory(req, res){
+  const category = req.params.category
+  Room. find({category:category}).then(
+    (result)=>{
+        res.json(
+            {
+                rooms: result
+            }
+        )
+    }
+  ).catch(
+    ()=>{
+        res.json(
+            {
+                message: "Failed to get rooms"
+            }
+        )
+    }
+  )
 }
